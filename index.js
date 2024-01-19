@@ -106,7 +106,6 @@ app.get('/fetch', async (req, res) => {
     const responses = await Promise.all(requests);
 
     responses.forEach((response, index) => {
-      console.log(response.data)
       if (index == 4) {
         const mappedData = response.data.aliexpress_affiliate_link_generate_response.resp_result.result.promotion_links.promotion_link.reduce((res, item) => {
           const sourceValue = item.source_value;
@@ -187,7 +186,7 @@ app.get('/fetch', async (req, res) => {
           };
 
           var shaped = {
-            name: data.data.metaDataComponent.title.replace("| |   - AliExpress", "").replace("|", " "),
+            name: data.data.metaDataComponent.title.replace(/(- AliExpress|\|)/g, " ").replace(/\s{3,}/g, "."),
             image: data.data.imageComponent.imagePathList[0],
             shipping: shipping(),
             shippingInfo: shippingInfo(),
