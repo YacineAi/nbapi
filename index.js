@@ -159,8 +159,8 @@ app.get('/fetch', async (req, res) => {
                 for (const coupon of promotion.promotionPanelDetailDTOList) {
                   const content = {
                     code: coupon.attributes.couponCode,
-                    detail: coupon.promotionDetail,
-                    desc: coupon.promotionDesc,
+                    on: parseFloat(coupon.promotionDetail.match(/\d+(\.\d+)?/g)[0]),
+                    desc: parseFloat(coupon.promotionDesc.match(/\d+(\.\d+)?/g)[0]),
                   };
                   copo.push(content)
                 }
@@ -194,7 +194,7 @@ app.get('/fetch', async (req, res) => {
             totalRates: data.data.feedbackComponent.totalValidNum,
             price: data.data.priceComponent.origPrice.minAmount.value,
             discountPrice: data.data.priceComponent.discountPrice.minActivityAmount != undefined && data.data.priceComponent.discountPrice.minActivityAmount.value || "No discount Price",
-            sales: parseInt(data.data.tradeComponent.formatTradeCount.match(/\d+/g)[0]),
+            sales: parseFloat(data.data.tradeComponent.formatTradeCount.match(/\d+(\.\d+)?/g)[0]),
             discount: discount(),
             coupon: coupon(),
             store: data.data.sellerComponent.storeName,
@@ -208,7 +208,7 @@ app.get('/fetch', async (req, res) => {
             if (data.data.priceComponent.coinDiscountText == undefined) {
               return "none"
             } else {
-              return data.data.priceComponent.coinDiscountText.match(/\d+/g)[0];
+              return data.data.priceComponent.coinDiscountText.match(/\d+(\.\d+)?/g)[0];
             }
           };
 
@@ -222,7 +222,7 @@ app.get('/fetch', async (req, res) => {
           
           var total = () => {
             if (data.data.priceComponent.coinDiscountText != undefined) {
-                const total = parseFloat(price_fun()) - (parseFloat(price_fun()) * parseFloat(data.data.priceComponent.coinDiscountText.match(/\d+/g)[0])) / 100;
+                const total = parseFloat(price_fun()) - (parseFloat(price_fun()) * parseFloat(data.data.priceComponent.coinDiscountText.match(/\d+(\.\d+)?/g)[0])) / 100;
                 return total.toFixed(2);
             } else {
               return parseFloat(price_fun());
