@@ -146,7 +146,7 @@ app.get('/fetch', async (req, res) => {
             if (data.data.priceComponent.coinDiscountText == undefined) {
               return "none"
             } else {
-              return data.data.priceComponent.coinDiscountText
+              return parseFloat(data.data.priceComponent.coinDiscountText.match(/\d+(\.\d+)?/g)[0])
             }
           };
 
