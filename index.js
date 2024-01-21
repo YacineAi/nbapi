@@ -193,7 +193,7 @@ app.get('/fetch', async (req, res) => {
             rate: data.data.feedbackComponent.evarageStar,
             totalRates: data.data.feedbackComponent.totalValidNum,
             price: data.data.priceComponent.origPrice.minAmount.value,
-            discountPrice: data.data.priceComponent.discountPrice.minActivityAmount != undefined && data.data.priceComponent.discountPrice.minActivityAmount.value || "No discount Price",
+            discountPrice: data.data.priceComponent.discountPrice.minActivityAmount != undefined && data.data.priceComponent.discountPrice.minActivityAmount.value || "none",
             sales: parseFloat(data.data.tradeComponent.formatTradeCount.match(/\d+(\.\d+)?/g)[0]),
             discount: discount(),
             coupon: coupon(),
